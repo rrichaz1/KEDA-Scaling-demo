@@ -1,0 +1,19 @@
+{{- if .Values.autoscaling.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "az-sb-consumer-go-poc.fullname" . }}-scaler
+spec:
+  scaleTargetRef:
+    name: {{ include "az-sb-consumer-go-poc.fullname" . }}
+  pollingInterval: {{ .Values.autoscaling.pollingInterval }}
+  cooldownPeriod:  {{ .Values.autoscaling.cooldownPeriod }}
+  minReplicaCount: {{ .Values.autoscaling.minReplicas }}
+  maxReplicaCount: {{ .Values.autoscaling.maxReplicas }}
+  triggers:
+  - type: azure-servicebus
+    metadata:
+      queueName: {{ .Values.autoscaling.queueName }}
+      connectionFromEnv: queueConnString # reference to a connection string in deployment
+      messageCount: "{{ .Values.autoscaling.messageCount }}"
+{{- end }}
