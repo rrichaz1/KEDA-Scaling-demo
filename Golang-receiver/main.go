@@ -8,8 +8,10 @@ import (
 
 	"github.com/michaelbironneau/asbclient"
 )
-func checkmsg() {
-	
+
+func main() {
+	log.Printf("Starting")
+
 	client := asbclient.New(asbclient.Queue, os.Getenv("sb_namespace"), os.Getenv("sb_key_name"), os.Getenv("sb_key_value"))
 
 	path := os.Getenv("sb_queue")
@@ -20,6 +22,8 @@ func checkmsg() {
 
 		if err != nil {
 			log.Printf("Peek error: %s", err)
+		} else if msg == nil {
+			log.Printf("No messages there")
 		} else {
 			log.Printf("Peeked message: '%s'", string(msg.Body))
 			err = client.DeleteMessage(msg)
@@ -31,13 +35,6 @@ func checkmsg() {
 		}
 		rand.Seed(time.Now().UnixNano())
 		time.Sleep(time.Second * time.Duration(rand.Intn(40)))
-	}
-}
-func main() {
-	log.Printf("Starting")
-	go checkmsg()
-	for {
-
 	}
 
 }

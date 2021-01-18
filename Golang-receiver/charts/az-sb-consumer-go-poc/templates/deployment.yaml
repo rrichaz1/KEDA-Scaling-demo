@@ -40,11 +40,13 @@ spec:
           livenessProbe:
             exec:
               command:
-              - /bin/health
+              - echo
+              - HI
           readinessProbe:
             exec:
               command:
-              - /bin/health
+              - echo
+              - hi
           envFrom: 
           - configMapRef: 
               name: {{ .Chart.Name }}-configmap
