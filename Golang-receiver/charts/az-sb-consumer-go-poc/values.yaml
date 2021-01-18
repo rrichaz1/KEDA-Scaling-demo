@@ -8,7 +8,7 @@ image:
   repository: dvkcool/az_service_bus_consumer_golang
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v2"
+  tag: "v5"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -66,7 +66,7 @@ affinity: {}
 
 envVariables:
   sb_namespace: ""
-  sb_key_name: ""
+  sb_key_name: """
   sb_key_value: ""
-  sb_queue: "keda-demo"
+  sb_queue: ""
   queueConnString: ""

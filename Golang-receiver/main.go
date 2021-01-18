@@ -6,48 +6,38 @@ import (
 	"os"
 	"time"
 
-	"github.com/Azure/azure-service-bus-go"
+	"github.com/michaelbironneau/asbclient"
 )
+func checkmsg() {
+	
+	client := asbclient.New(asbclient.Queue, os.Getenv("sb_namespace"), os.Getenv("sb_key_name"), os.Getenv("sb_key_value"))
 
-func main() {
-	log.Printf("Starting")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	connStr := os.Getenv("queueConnString")
-	if connStr == "" {
-		fmt.Println("FATAL: expected environment variable SERVICEBUS_CONNECTION_STRING not set")
-		return
-	}
-
-	// Create a client to communicate with a Service Bus Namespace.
-	ns, err := servicebus.NewNamespace(servicebus.NamespaceWithConnectionString(connStr))
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	// Create a client to communicate with the queue. (The queue must have already been created, see `QueueManager`)
-	q, err := ns.NewQueue(os.Getenv("sb_queue"))
-	if err != nil {
-		fmt.Println("FATAL: ", err)
-		return
-	}
+	path := os.Getenv("sb_queue")
 
 	for {
-		err = q.ReceiveOne(
-			ctx,
-			servicebus.HandlerFunc(func(ctx context.Context, message *servicebus.Message) error {
-				fmt.Println(string(message.Data))
-				return message.Complete(ctx)
-			}))
-		if err != nil {
-			fmt.Println("FATAL: ", err)
-			return
-		}
+		log.Printf("Peeking...")
+		msg, err := client.PeekLockMessage(path, 30)
 
+		if err != nil {
+			log.Printf("Peek error: %s", err)
+		} else {
+			log.Printf("Peeked message: '%s'", string(msg.Body))
+			err = client.DeleteMessage(msg)
+			if err != nil {
+				log.Printf("Delete error: %s", err)
+			} else {
+				log.Printf("Deleted message")
+			}
+		}
 		rand.Seed(time.Now().UnixNano())
 		time.Sleep(time.Second * time.Duration(rand.Intn(40)))
+	}
+}
+func main() {
+	log.Printf("Starting")
+	go checkmsg()
+	for {
+
 	}
 
 }
