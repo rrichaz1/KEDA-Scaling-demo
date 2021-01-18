@@ -5,7 +5,7 @@ WORKDIR /src/
 COPY ./Golang-receiver/main.go /src/receiver/
 COPY ./health-check/health.go /src/health/
 
-RUN go get github.com/michaelbironneau/asbclient
+RUN go get github.com/Azure/azure-service-bus-go
 
 WORKDIR /src/receiver
 RUN CGO_ENABLED=0 go build  -o /bin/demo

@@ -40,13 +40,14 @@ spec:
           livenessProbe:
             exec:
               command:
-              - echo 
-              - ok
+              - /bin/health
           readinessProbe:
             exec:
               command:
-              - echo
-              - ok
+              - /bin/health
+          envFrom: 
+          - configMapRef: 
+              name: {{ .Chart.Name }}-configmap
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

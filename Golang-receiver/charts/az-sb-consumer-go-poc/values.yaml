@@ -8,7 +8,7 @@ image:
   repository: dvkcool/az_service_bus_consumer_golang
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1"
+  tag: "v2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -65,8 +65,8 @@ tolerations: []
 affinity: {}
 
 envVariables:
-  sb_namespace: "ocr-sb-namespace-dev"
-  sb_key_name: "RootManageSharedAccessKey"
-  sb_key_value: "+ilDnag+V4cv3AqtCP5i2onjoVnQZ/6Id3sXIkoyw6c="
+  sb_namespace: ""
+  sb_key_name: ""
+  sb_key_value: ""
   sb_queue: "keda-demo"
-  queueConnString: "Endpoint=sb://ocr-sb-namespace-dev.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=+ilDnag+V4cv3AqtCP5i2onjoVnQZ/6Id3sXIkoyw6c="
+  queueConnString: ""
