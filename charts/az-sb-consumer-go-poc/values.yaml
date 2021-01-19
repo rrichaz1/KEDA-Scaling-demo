@@ -71,3 +71,4 @@ envVariables:
   sb_queue: "keda-demo"
   queueConnString: ""
 
+
