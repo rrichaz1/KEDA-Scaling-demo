@@ -95,6 +95,9 @@ The go module used to interact with service bus can be found here: [github.com/m
 Feel free to open an issue, or send me a PR with the fix.
 I will be happy to merge the PR.
 
+## Liked the repo?
+Feel free to drop a star, it feels nice to get stars, haha.
+
 ___________________________________________________________________________________________________
 Happy Coding
 ____________________________________________________________________________________________________
