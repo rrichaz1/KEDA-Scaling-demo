@@ -55,7 +55,6 @@ autoscaling:
   pollingInterval: 5
   cooldownPeriod: 10
   messageCount: 10
-  queueName: keda-demo
 
 nodeSelector: 
   kubernetes.io/os: linux

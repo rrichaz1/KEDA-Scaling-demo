@@ -13,7 +13,7 @@ spec:
   triggers:
   - type: azure-servicebus
     metadata:
-      queueName: {{ .Values.autoscaling.queueName }}
+      queueName: {{ .Values.envVariables.sb_queue }}
       connectionFromEnv: queueConnString # reference to a connection string in deployment
       messageCount: "{{ .Values.autoscaling.messageCount }}"
 {{- end }}
